@@ -121,7 +121,7 @@ pip install -r requirements.txt
 # Build rocksdb at first
 ### Can be removed once the code has been updated to run with rocksdb v. 5.17
 ### Issue 1551: Update RocksDB; https://github.com/hyperledger/indy-plenum/issues/1551
-#build_rocksdb_deb 5.8.8
+build_rocksdb_deb 5.8.8
 
 #### PyZMQCommand
 build_from_pypi_fpm pyzmq 22.3.0 --zmq=bundled
@@ -151,3 +151,5 @@ build_from_pypi_wheel sha3
 build_from_pypi_wheel six
 build_from_pypi_wheel sortedcontainers 1.5.7
 build_from_pypi_wheel ujson 1.33
+
+rm -vf ${OUTPUT_PATH}/python3-setuptools*.deb

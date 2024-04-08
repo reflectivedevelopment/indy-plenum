@@ -36,5 +36,4 @@ RUN apt-get update -y && apt-get install -y \
     rubygems && \
     gem install --no-document dotenv:2.8.1 fpm:1.15.0 && \
     pip3 install Cython==0.29.36
-RUN pip3 install wheel2deb && apt-get install -y debhelper
 

@@ -105,8 +105,9 @@ function build_from_pypi_wheel {
     pushd /tmp/wheel
     pip3 wheel ${PACKAGE_NAME}${PACKAGE_VERSION}
     wheel2deb
-    mv output/*.deb ${OUTPUT_PATH}
+    mkdir -p ${OUTPUT_PATH}
     popd
+    mv /tmp/output/*.deb ${OUTPUT_PATH}
     rm -rvf /tmp/wheel
 }
 
@@ -117,6 +118,7 @@ pushd `dirname ${SCRIPT_PATH}` >/dev/null
 
 # Install any python requirements needed for the builds.
 pip install -r requirements.txt
+pip3 install wheel2deb && apt-get install -y debhelper
 
 # Build rocksdb at first
 ### Can be removed once the code has been updated to run with rocksdb v. 5.17

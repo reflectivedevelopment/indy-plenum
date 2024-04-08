@@ -107,7 +107,7 @@ function build_from_pypi_wheel {
     wheel2deb
     mkdir -p ${OUTPUT_PATH}
     popd
-    mv /tmp/output/*.deb ${OUTPUT_PATH}
+    mv /tmp/wheel/output/*.deb ${OUTPUT_PATH}
     rm -rvf /tmp/wheel
 }
 

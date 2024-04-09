@@ -4,6 +4,8 @@ set -e
 set -x
 
 OUTPUT_PATH=${1:-.}
+wheel2debconf="$(dirname "$(realpath "$0")")"/wheel2deb.yml
+
 
 function build_rocksdb_deb {
     VERSION=$1
@@ -104,7 +106,7 @@ function build_from_pypi_wheel {
     mkdir /tmp/wheel
     pushd /tmp/wheel
     pip3 wheel ${PACKAGE_NAME}${PACKAGE_VERSION}
-    wheel2deb
+    wheel2deb --config ${wheel2debconf}
     mkdir -p ${OUTPUT_PATH}
     popd
     mv /tmp/wheel/output/*.deb ${OUTPUT_PATH}

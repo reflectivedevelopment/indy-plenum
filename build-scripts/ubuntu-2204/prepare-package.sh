@@ -32,6 +32,7 @@ if [ "$distro_packages" = "debian-packages" ]; then
   # sed -i "s~ujson==1.33~ujson==1.33-1build1~" setup.py
   # sed -i "s~prompt_toolkit==0.57~prompt_toolkit==0.57-1~" setup.py
   # sed -i "s~msgpack-python==0.4.6~msgpack==0.4.6-1build1~" setup.py
+  sed -i "s~importlib_metadata==3.10.1~importlib_metadata==0:3.10.1-1~w2d0~" setup.py
 elif [ "$distro_packages" = "python-packages" ]; then
   echo -e "\nNo adaption of dependencies for python packages"
 else

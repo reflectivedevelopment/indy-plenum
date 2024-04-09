@@ -27,6 +27,24 @@ function build_rocksdb_deb {
     rm -rf /tmp/rocksdb
 }
 
+function build_ioflo_deb {
+    VERSION=$1
+
+    git clone https://github.com/reflectivedevelopment/ioflo.git /tmp/ioflo
+    pushd /tmp/ioflo
+    git checkout $VERSION
+
+    python3 setup.py bdist_wheel
+    pushd dist
+    wheel2deb --config ${wheel2debconf}
+    mkdir -p ${OUTPUT_PATH}
+    mv output/*.deb ${OUTPUT_PATH}
+
+    popd
+    rm -rf /tmp/ioflo
+    popd
+}
+
 function build_from_pypi_fpm {
     PACKAGE_NAME=$1
 
@@ -106,6 +124,8 @@ function build_from_pypi_wheel {
     mkdir /tmp/wheel
     pushd /tmp/wheel
     pip3 wheel ${PACKAGE_NAME}${PACKAGE_VERSION}
+    # Can't build cytoolz using wheel for rlp, but can't build rlp with fpm
+    rm -f /tmp/wheel/cytoolz*
     wheel2deb --config ${wheel2debconf}
     mkdir -p ${OUTPUT_PATH}
     popd
@@ -135,7 +155,7 @@ build_from_pypi_wheel base58
 ### Needs to be pinned to 3.10.1 because from v4.0.0 the package name ends in python3-importlib-metadata_0.0.0_amd64.deb
 ### https://github.com/hyperledger/indy-plenum/runs/4166593170?check_suite_focus=true#step:5:5304
 build_from_pypi_wheel importlib-metadata 3.10.1
-build_from_pypi_wheel ioflo
+build_ioflo_deb 2.0.3
 build_from_pypi_wheel jsonpickle
 build_from_pypi_wheel leveldb
 build_from_pypi_wheel libnacl 1.6.1
@@ -149,11 +169,12 @@ build_from_pypi_wheel pympler 0.8
 build_from_pypi_wheel python-dateutil
 build_from_pypi_wheel python-rocksdb
 build_from_pypi_wheel python-ursa 0.1.1
-build_from_pypi_wheel rlp 0.6.0
+build_from_pypi_wheel rlp 2.0.0
+build_from_pypi_fpm cytoolz 0.12.3
 build_from_pypi_wheel semver 2.13.0
 build_from_pypi_wheel sha3
 build_from_pypi_wheel six
-build_from_pypi_wheel sortedcontainers 1.5.7
+build_from_pypi_wheel sortedcontainers 2.1.0
 build_from_pypi_wheel ujson 1.33
 
 rm -vf ${OUTPUT_PATH}/python3-setuptools*.deb

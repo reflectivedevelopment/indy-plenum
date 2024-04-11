@@ -29,7 +29,7 @@ class ClientMessageProvider:
         self._pending_client_messages.setdefault(ident, []).append((self._timer.get_current_time(),
                                                                     msg))
         if len(self._pending_client_messages) > self._config.PENDING_CLIENT_LIMIT:
-            self._pending_client_messages.popitem(index=0)
+            self._pending_client_messages.popitem(last=False)
         if len(self._pending_client_messages[ident]) > self._config.PENDING_MESSAGES_FOR_ONE_CLIENT_LIMIT:
             self._pending_client_messages[ident].pop(0)
         result = True

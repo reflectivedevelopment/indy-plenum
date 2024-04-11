@@ -163,7 +163,7 @@ def test_recorder_get_next_incoming_only(recorder):
     while recorder.is_playing and (time.perf_counter() < start + max_time_to_run):
         vals = recorder.get_next()
         if vals:
-            check = recorded_incomings.popitem(index=0)[1]
+            check = recorded_incomings.popitem(last=False)[1]
             assert check == vals
         else:
             time.sleep(0.01)
@@ -207,7 +207,7 @@ def test_recorder_get_next(recorder):
         if vals:
             inc = Recorder.filter_incoming(vals)
             if inc:
-                assert recorded_incomings.popitem(index=0)[1] == inc
+                assert recorded_incomings.popitem(last=False)[1] == inc
         else:
             time.sleep(0.01)
 

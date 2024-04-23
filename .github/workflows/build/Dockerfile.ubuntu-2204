@@ -28,6 +28,8 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 9692C00E657DDE61 &&
 #RUN echo "deb https://hyperledger.jfrog.io/artifactory/indy focal dev"  >> /etc/apt/sources.list && \
 #    echo "deb https://repo.sovrin.org/deb bionic master" >> /etc/apt/sources.list && \
 #    echo "deb https://repo.sovrin.org/sdk/deb bionic master" >> /etc/apt/sources.list
+
+# TODO change this to official repo
 RUN echo "deb [trusted=yes] http://209.141.41.82:8000/ packagedir/" >> /etc/apt/sources.list
 
 
